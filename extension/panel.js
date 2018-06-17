@@ -36,7 +36,7 @@ function updateButtons(triggers) {
     let elem = document.getElementById(t.name);
 
     if (!elem) {
-      elem = document.createElement('button');
+      elem = document.createElement('input');
       elem.setAttribute('id', t.name);
       elem.type = 'button';
       elem.classList.add('dt-trigger');
@@ -44,7 +44,6 @@ function updateButtons(triggers) {
     }
 
     elem.value = t.name;
-    elem.innerHTML = t.name;
     elem.onclick = () => onClick(t);
   });
 
