@@ -1,0 +1,12 @@
+{
+  "name": "DevTrigger",
+  "version": "1.0.0",
+  "description": "Easily trigger functions from Chrome DevTools.",
+  "main": "index.js",
+  "repository": "https://github.com/dsdeur/DevTrigger.git",
+  "author": "dsdeur <dsdeur@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "1.13.5"
+  }
+}
