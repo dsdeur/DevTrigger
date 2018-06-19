@@ -13,6 +13,10 @@ backgroundPageConnection.postMessage({
   tabId: chrome.devtools.inspectedWindow.tabId,
 });
 
+function logToConsole(name, result) {
+  return `console.log('%c-> %c${name}', 'padding-bottom: 5px; color: #1f1f1f', 'color: blue', '\\n', ${result})`;
+}
+
 function onClick({ name, type }) {
   let call = `window.dt['${name}']`;
 
@@ -23,10 +27,19 @@ function onClick({ name, type }) {
   }
 
   // Wrap with console log
-  call = `console.log('%c-> %c${type} %c${name}', 'padding-bottom: 5px; color: #bababa', 'color: #1f1f1f', 'color: blue', '\\n', ${call})`;
+  call = logToConsole(name, call);
 
   // Actually run the function in the window
-  chrome.devtools.inspectedWindow.eval(call, () => {});
+  chrome.devtools.inspectedWindow.eval(call, (value, exception) => {
+    if (exception) {
+      chrome.devtools.inspectedWindow.eval(
+        logToConsole(name, `\`${exception.value.toString()}\``),
+        (value, exception) => {
+          console.log(value, exception);
+        },
+      );
+    }
+  });
 }
 
 function updateButtons(triggers) {
